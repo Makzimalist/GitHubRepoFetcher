@@ -27,5 +27,5 @@ class GitHubApi {
         .build()
 
 
-    var gitHubService = retrofit.create(GitHubService::class.java)
+    var gitHubService: GitHubService = retrofit.create(GitHubService::class.java)
 }

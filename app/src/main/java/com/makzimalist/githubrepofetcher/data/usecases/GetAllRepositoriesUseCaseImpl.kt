@@ -1,14 +1,14 @@
 package com.makzimalist.githubrepofetcher.data.usecases
 
 import com.makzimalist.githubrepofetcher.data.api.model.RepositoryResponse
-import com.makzimalist.githubrepofetcher.domain.repo.GitHubRepositories
+import com.makzimalist.githubrepofetcher.domain.repo.GitHubRepoRepository
 import io.reactivex.Single
 
 class GetAllRepositoriesUseCaseImpl(
-    private val gitHubRepositories: GitHubRepositories
+    private val gitHubRepoRepository: GitHubRepoRepository
 ): GetAllRepositoriesUseCase {
 
     override fun getAllRepositories(): Single<RepositoryResponse> {
-        return gitHubRepositories.getAllRepositories()
+        return gitHubRepoRepository.getAllRepositories()
     }
 }

@@ -18,13 +18,22 @@ class ListViewModel : ViewModel(), KoinComponent {
     private val compositeDisposable = CompositeDisposable()
 
     val dataSubject = BehaviorSubject.create<List<Repository>>()
+    val loadingSubject = BehaviorSubject.createDefault(false)
 
     fun requestRepositories() {
+        loadingSubject.onNext(true)
         getAllRepositoriesUseCase.getAllRepositories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.items }
-            .subscribe({ dataSubject.onNext(it) }, { Log.e(this.javaClass.simpleName, it.message, it) })
+            .doFinally { loadingSubject.onNext(false) }
+            .subscribe({ dataSubject.onNext(it) },
+                { Log.e(this.javaClass.simpleName, it.message, it) })
             .addTo(compositeDisposable)
+    }
+
+    override fun onCleared() {
+        compositeDisposable.dispose()
+        super.onCleared()
     }
 }

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.makzimalist.githubrepofetcher.R
 import com.makzimalist.githubrepofetcher.data.api.model.Repository
+import com.makzimalist.githubrepofetcher.extension.gone
+import com.makzimalist.githubrepofetcher.extension.visible
 import com.makzimalist.githubrepofetcher.ui.detail.DetailsFragment
 import com.makzimalist.githubrepofetcher.ui.list.viewmodel.ListViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -45,6 +47,10 @@ class ListFragment : Fragment() {
     }
 
     private fun initBindings() {
+        viewModel.loadingSubject.subscribe { show ->
+            if (show) progressbar.visible() else progressbar.gone()
+        }.addTo(compositeDisposable)
+
         viewModel.dataSubject
             .subscribe {
                 adapter.data = it
@@ -66,8 +72,8 @@ class ListFragment : Fragment() {
     }
 
     override fun onStop() {
-        super.onStop()
         compositeDisposable.dispose()
+        super.onStop()
     }
 
     private fun showDetails(repository: Repository) {

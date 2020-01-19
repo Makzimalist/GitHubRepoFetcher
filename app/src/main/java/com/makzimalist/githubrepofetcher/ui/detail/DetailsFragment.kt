@@ -11,14 +11,18 @@ import com.makzimalist.githubrepofetcher.data.api.model.Repository
 import com.makzimalist.githubrepofetcher.extension.hide
 import com.makzimalist.githubrepofetcher.extension.visible
 import com.makzimalist.githubrepofetcher.ui.detail.viewmodel.DetailsViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.repository_details_fragment.*
 
 class DetailsFragment : BottomSheetDialogFragment() {
 
-    lateinit var viewModel: DetailsViewModel
+    private lateinit var viewModel: DetailsViewModel
+
+    private val compositeDisposable = CompositeDisposable()
 
     companion object {
-        val REPOSITORY_KEY = "REPOSITORY_KEY"
+        const val REPOSITORY_KEY = "REPOSITORY_KEY"
 
         fun newInstance(repository: Repository): DetailsFragment {
             return DetailsFragment().apply {
@@ -41,10 +45,19 @@ class DetailsFragment : BottomSheetDialogFragment() {
 
         val repository: Repository = arguments?.getParcelable(REPOSITORY_KEY) ?: return
 
-        initView(repository)
+        updateViews(repository)
+        initBinding()
+
+        viewModel.startPolling(repository)
     }
 
-    private fun initView(repository: Repository) {
+    private fun initBinding() {
+        viewModel.updateSubject
+            .subscribe { updateViews(it) }
+            .addTo(compositeDisposable)
+    }
+
+    private fun updateViews(repository: Repository) {
         title.text = repository.name
         owner.text = repository.owner.name
         stars.text = repository.stars.toString()
@@ -60,5 +73,10 @@ class DetailsFragment : BottomSheetDialogFragment() {
         }
 
         github_button.setOnClickListener { viewModel.openBrowser(context, repository.html_url) }
+    }
+
+    override fun onStop() {
+        compositeDisposable.dispose()
+        super.onStop()
     }
 }
