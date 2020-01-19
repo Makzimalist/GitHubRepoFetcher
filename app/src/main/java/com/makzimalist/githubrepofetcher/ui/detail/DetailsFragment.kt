@@ -10,6 +10,7 @@ import com.makzimalist.githubrepofetcher.R
 import com.makzimalist.githubrepofetcher.data.api.model.Repository
 import com.makzimalist.githubrepofetcher.extension.hide
 import com.makzimalist.githubrepofetcher.extension.visible
+import com.makzimalist.githubrepofetcher.ui.detail.viewmodel.DetailsViewModel
 import kotlinx.android.synthetic.main.repository_details_fragment.*
 
 class DetailsFragment : BottomSheetDialogFragment() {

@@ -1,4 +1,4 @@
-package com.makzimalist.githubrepofetcher.ui.detail
+package com.makzimalist.githubrepofetcher.ui.detail.viewmodel
 
 import android.content.Context
 import android.content.Intent
