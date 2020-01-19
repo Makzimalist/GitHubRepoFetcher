@@ -5,7 +5,7 @@ import com.makzimalist.githubrepofetcher.data.usecases.GetAllRepositoriesUseCase
 import com.makzimalist.githubrepofetcher.data.usecases.GetAllRepositoriesUseCaseImpl
 import com.makzimalist.githubrepofetcher.domain.repo.GitHubRepositories
 import com.makzimalist.githubrepofetcher.domain.repo.GitHubRepositoriesImpl
-import com.makzimalist.githubrepofetcher.ui.list.ListViewModel
+import com.makzimalist.githubrepofetcher.ui.list.viewmodel.ListViewModel
 import org.koin.dsl.module
 
 val appModule = module {
