@@ -2,11 +2,13 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@color/blue_grey_50"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="4dp">
 
@@ -21,11 +23,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="myCool Lib"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="myCool Lib" />
 
         <View
             android:layout_width="match_parent"
@@ -41,11 +43,11 @@
             android:layout_marginTop="24dp"
             android:ellipsize="marquee"
             android:maxLines="2"
-            android:text="This is a super long description for a projekt like this. You can find more in the readme  You can find more in the readme You can find more in the readme"
             android:textColor="@color/blue_grey_200"
             app:layout_constraintEnd_toEndOf="@id/language"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="This is a super long description for a projekt like this. You can find more in the readme  You can find more in the readme You can find more in the readme" />
 
         <TextView
             android:id="@+id/owner"
@@ -53,14 +55,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:drawableLeft="@drawable/ic_account_circle"
+            android:drawableStart="@drawable/ic_account_circle"
             android:drawablePadding="3dp"
             android:gravity="center"
-            android:text="Makzimalist"
             android:textColor="@color/blue_grey_700"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/description"
-            app:layout_constraintTop_toBottomOf="@id/description" />
+            app:layout_constraintTop_toBottomOf="@id/description"
+            tools:text="Makzimalist" />
 
         <TextView
             android:id="@+id/language"
@@ -72,11 +74,11 @@
             android:paddingTop="2dp"
             android:paddingEnd="14dp"
             android:paddingBottom="2dp"
-            android:text="Kotlin"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/title" />
+            app:layout_constraintTop_toTopOf="@id/title"
+            tools:text="Kotlin" />
 
         <TextView
             android:id="@+id/stars"
@@ -85,11 +87,11 @@
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="3dp"
             android:gravity="center"
-            android:text="2176"
             android:textColor="@color/blue_grey_700"
             app:layout_constraintBottom_toBottomOf="@id/owner"
             app:layout_constraintEnd_toEndOf="@id/language"
-            app:layout_constraintTop_toTopOf="@id/owner" />
+            app:layout_constraintTop_toTopOf="@id/owner"
+            tools:text="2176" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

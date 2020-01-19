@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.makzimalist.githubrepofetcher.R
 import com.makzimalist.githubrepofetcher.data.api.model.Repository
+import com.makzimalist.githubrepofetcher.extension.hide
+import com.makzimalist.githubrepofetcher.extension.visible
 import kotlinx.android.synthetic.main.repository_list_item.view.*
 
-class RepositoryListAdapter(var data: List<Repository> = emptyList()) :
-    RecyclerView.Adapter<RepositoryListAdapter.RepoViewHolder>() {
-
-    class RepoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class RepositoryListAdapter(
+    var data: List<Repository> = emptyList(),
+    val listener: RepositoryClickListener
+) : RecyclerView.Adapter<RepositoryListAdapter.RepoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
         val item = LayoutInflater.from(parent.context)
@@ -30,12 +32,18 @@ class RepositoryListAdapter(var data: List<Repository> = emptyList()) :
         holder.itemView.stars.text = repository.stars.toString()
 
         if (repository.language.isNullOrEmpty()) {
-            holder.itemView.language.visibility = View.INVISIBLE
+            holder.itemView.language.hide()
         } else {
-            holder.itemView.language.visibility = View.VISIBLE
+            holder.itemView.language.visible()
             holder.itemView.language.text = repository.language
-
         }
+
+        holder.itemView.setOnClickListener { listener.onRepositoryClick(repository) }
     }
 
+    interface RepositoryClickListener {
+        fun onRepositoryClick(repository: Repository)
+    }
+
+    class RepoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

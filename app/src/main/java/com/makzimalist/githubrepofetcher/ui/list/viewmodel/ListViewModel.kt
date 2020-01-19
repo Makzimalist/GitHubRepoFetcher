@@ -1,5 +1,6 @@
 package com.makzimalist.githubrepofetcher.ui.list.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.makzimalist.githubrepofetcher.data.api.model.Repository
 import com.makzimalist.githubrepofetcher.data.usecases.GetAllRepositoriesUseCase
@@ -14,7 +15,6 @@ import org.koin.core.inject
 class ListViewModel : ViewModel(), KoinComponent {
 
     private val getAllRepositoriesUseCase: GetAllRepositoriesUseCase by inject()
-
     private val compositeDisposable = CompositeDisposable()
 
     val dataSubject = BehaviorSubject.create<List<Repository>>()
@@ -24,7 +24,7 @@ class ListViewModel : ViewModel(), KoinComponent {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.items }
-            .subscribe({ dataSubject.onNext(it) }, { it.printStackTrace() })
+            .subscribe({ dataSubject.onNext(it) }, { Log.e(this.javaClass.simpleName, it.message, it) })
             .addTo(compositeDisposable)
     }
 }

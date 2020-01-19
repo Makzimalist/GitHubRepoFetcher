@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.makzimalist.githubrepofetcher.R
+import com.makzimalist.githubrepofetcher.data.api.model.Repository
+import com.makzimalist.githubrepofetcher.ui.detail.DetailsFragment
 import com.makzimalist.githubrepofetcher.ui.list.viewmodel.ListViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -51,7 +53,13 @@ class ListFragment : Fragment() {
     }
 
     private fun initViews() {
-        adapter = RepositoryListAdapter()
+        val listener = object : RepositoryListAdapter.RepositoryClickListener {
+            override fun onRepositoryClick(repository: Repository) {
+                showDetails(repository)
+            }
+        }
+
+        adapter = RepositoryListAdapter(listener = listener)
 
         repo_list.adapter = adapter
         repo_list.layoutManager = LinearLayoutManager(context)
@@ -62,4 +70,8 @@ class ListFragment : Fragment() {
         compositeDisposable.dispose()
     }
 
+    private fun showDetails(repository: Repository) {
+        val fragment = DetailsFragment.newInstance(repository)
+        fragmentManager?.let { fragment.show(it, "{${fragment.tag}}") }
+    }
 }
